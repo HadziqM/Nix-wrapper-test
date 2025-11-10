@@ -1,0 +1,80 @@
+add_newline = true
+format = "[░▒▓](#b3bee2)[ 󱄅 ](bg:#b3bee2 fg:#408fff)[](bg:#408fff fg:#b3bee2)$directory[](fg:#408fff bg:#394260)$git_branch$git_status[](fg:#394260 bg:#212736)$nodejs$rust$golang[](fg:#212736 bg:#1d2230)$time[ ](fg:#1d2230)\n$character"
+palette = "base16"
+
+[directory]
+format = "[ $path ]($style)"
+style = "fg:#e3e5e5 bg:#408fff"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+format = "[[ $symbol $branch ](fg:#408fff bg:#394260)]($style)"
+style = "bg:#394260"
+symbol = ""
+
+[git_status]
+format = "[[($all_status$ahead_behind )](fg:#408fff bg:#394260)]($style)"
+style = "bg:#394260"
+
+[nodejs]
+format = "[[ $symbol ($version) ](fg:#408fff bg:#212736)]($style)"
+style = "bg:#212736"
+symbol = ""
+
+[palettes.base16]
+base00 = "#1e1e2e"
+base01 = "#181825"
+base02 = "#313244"
+base03 = "#45475a"
+base04 = "#585b70"
+base05 = "#cdd6f4"
+base06 = "#f5e0dc"
+base07 = "#b4befe"
+base08 = "#f38ba8"
+base09 = "#fab387"
+base0A = "#f9e2af"
+base0B = "#a6e3a1"
+base0C = "#94e2d5"
+base0D = "#89b4fa"
+base0E = "#cba6f7"
+base0F = "#f2cdcd"
+base10 = "#1e1e2e"
+base11 = "#1e1e2e"
+base12 = "#f38ba8"
+base13 = "#f9e2af"
+base14 = "#a6e3a1"
+base15 = "#94e2d5"
+base16 = "#89b4fa"
+base17 = "#cba6f7"
+black = "#1e1e2e"
+blue = "#89b4fa"
+bright-black = "#45475a"
+bright-blue = "#89b4fa"
+bright-cyan = "#94e2d5"
+bright-green = "#a6e3a1"
+bright-magenta = "#cba6f7"
+bright-purple = "#cba6f7"
+bright-red = "#f38ba8"
+bright-white = "#b4befe"
+bright-yellow = "#f9e2af"
+brown = "#f2cdcd"
+cyan = "#94e2d5"
+green = "#a6e3a1"
+magenta = "#cba6f7"
+orange = "#fab387"
+purple = "#cba6f7"
+red = "#f38ba8"
+white = "#cdd6f4"
+yellow = "#f9e2af"
+
+[rust]
+format = "[[ $symbol ($version) ](fg:#408fff bg:#212736)]($style)"
+style = "bg:#212736"
+symbol = ""
+
+[time]
+disabled = false
+format = "[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)"
+style = "bg:#1d2230"
+time_format = "%R"
