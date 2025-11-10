@@ -10,6 +10,6 @@ pkgs.symlinkJoin {
     cp ${./flutter.json} $out/config/helix/snippets/dart.json
 
     wrapProgram $out/bin/hx-lsp \
-    --set $XDG_CONFIG_HOME $out/config
+    --set XDG_CONFIG_HOME $out/config
   '';
 }

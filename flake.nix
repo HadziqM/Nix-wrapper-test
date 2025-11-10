@@ -19,7 +19,7 @@
           allowUnfree = true;
         };
       };
-
+      helix = pkgs.callPackage ./modules/tui/helix { withNixd = false; };
     in
     {
       packages.${system} = {
@@ -37,8 +37,17 @@
             fd
           ];
         };
-        helix = pkgs.callPackage ./modules/tui/helix { };
+        inherit helix;
+        helix-complete = pkgs.callPackage ./modules/tui/helix { };
         test = pkgs.callPackage ./test.nix { };
+      };
+
+      devShells.${system}.default = pkgs.mkShell {
+        name = "my-dev-shell";
+
+        buildInputs = [
+          helix
+        ];
       };
     };
 }

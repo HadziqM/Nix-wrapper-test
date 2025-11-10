@@ -1,19 +1,31 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  withNixd ? true,
+  ...
+}:
 let
-  hx-lsp = pkgs.callPackage ./snippets.nix;
+  hx-lsp = pkgs.callPackage ./snippets.nix { };
+
+  servers = [ "statix" ] ++ pkgs.lib.optional withNixd "nixd";
+
+  lsp =
+    if withNixd then
+      ''
+        [language-server.nixd]
+        command = "${pkgs.nixd}/bin/nixd"
+      ''
+    else
+      "";
   languages = pkgs.writeText "languages.toml" ''
         
     [[language]]
     auto-format = true
-    language-servers = ["nixd", "statix"]
+    language-servers = [${pkgs.lib.concatStringsSep ", " (map (s: "\"${s}\"") servers)}]
     name = "nix"
 
     [language.formatter]
     command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt"
 
-    [[language]]
-    language-servers = ["sqls"]
-    name = "sql"
 
     [[language]]
     name = "rust"
@@ -22,31 +34,20 @@ let
     command = "rustfmt"
 
     [[language]]
-    language-servers = ["svelteserver", "tailwind"]
-    name = "svelte"
-
-    [[language]]
     language-servers = ["dart", "hx-lsp"]
     name = "dart"
 
     [language-server.hx-lsp]
     command = "${hx-lsp}/bin/hx-lsp"
 
-    [language-server.nixd]
-    command = "${pkgs.nixd}/bin/nixd"
+    ${lsp}
 
     [language-server.rust-analyzer.config.check]
     command = "clippy"
 
-    [language-server.sqls]
-    command = "${pkgs.sqlint}/bin/sqlint"
-
     [language-server.statix]
     command = "${pkgs.statix}/bin/statix"
 
-    [language-server.tailwind]
-    args = ["--stdio"]
-    command = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server"
   '';
 in
 
@@ -65,6 +66,6 @@ pkgs.symlinkJoin {
     cp ${./themes.toml} $out/config/helix/themes/mocha_transparent.toml
 
     wrapProgram $out/bin/hx \
-    --set $XDG_CONFIG_HOME $out/config
+    --set XDG_CONFIG_HOME $out/config
   '';
 }
