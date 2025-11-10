@@ -44,7 +44,7 @@ let
       eval "$(${pkgs.atuin}/bin/atuin init zsh)"
       eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
       eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
-      eval "$(${pkgs.callPackage ./starship { }} init zsh)"
+      eval "$(${pkgs.callPackage ./starship { }}/bin/starship init zsh)"
     fi
 
 
