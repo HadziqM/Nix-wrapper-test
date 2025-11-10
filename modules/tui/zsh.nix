@@ -33,12 +33,15 @@ let
     setopt SHARE_HISTORY
     unsetopt EXTENDED_HISTORY
 
+    nix-clean-gcroot() {        
+      rm /nix/var/nix/gcroots/auto/*
+    }
 
     nix-cleanup() {
-      sudo rm /nix/var/nix/gcroots/auto/*
-      sudo nix-collect-garbage -d
-      sudo nix-store --optimise
+      nix-collect-garbage -d
+      nix-store --optimise
     }
+
 
     if [[ $TERM != "dumb" ]]; then
       eval "$(${pkgs.atuin}/bin/atuin init zsh)"
