@@ -9,7 +9,7 @@ let
     HELPDIR="${pkgs.zsh}/share/zsh/$ZSH_VERSION/help"
 
     autoload -U compinit && compinit
-    source ${pkgs.zsh-zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     ZSH_AUTOSUGGEST_STRATEGY=(history)
 
 
@@ -63,7 +63,7 @@ let
     alias -- lt='eza --tree'
     alias -- tree='eza -T'
 
-    source ${pkgs.zsh-zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     ZSH_HIGHLIGHT_HIGHLIGHTERS+=()
 
 

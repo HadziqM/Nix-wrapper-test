@@ -14,6 +14,7 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
+        inherit system;
         config = {
           allowUnfree = true;
         };
@@ -25,12 +26,8 @@
         shell = pkgs.symlinkJoin {
           name = "shell";
           paths = with pkgs; [
-            callPackage
-            ./modules/tui/starship
-            { }
-            callPackage
-            ./modules/tui/zsh.nix
-            { }
+            (callPackage ./modules/tui/starship { })
+            (callPackage ./modules/tui/zsh.nix { })
             atuin
             zoxide
             direnv
