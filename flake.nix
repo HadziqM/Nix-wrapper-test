@@ -32,9 +32,12 @@
             ./modules/tui/zsh.nix
             { }
             atuin
+            zoxide
+            direnv
             bat
             eza
-            zoxide
+            ripgrep
+            fd
           ];
         };
       };
