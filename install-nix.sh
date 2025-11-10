@@ -11,4 +11,6 @@ else
   echo "Flakes are already enabled."
 fi
 
-sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
+echo "Installing Nix (daemon mode)..."
+curl -L https://nixos.org/nix/install -o /tmp/install-nix.sh
+sh /tmp/install-nix.sh --daemon
