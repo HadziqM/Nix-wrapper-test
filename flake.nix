@@ -37,6 +37,7 @@
             fd
           ];
         };
+        test = pkgs.callPackage ./test.nix { };
       };
     };
 }
