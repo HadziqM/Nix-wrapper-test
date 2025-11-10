@@ -2,9 +2,10 @@
 let
   zshrc = pkgs.writeText "zshrc" ''
     typeset -U path cdpath fpath manpath
-    for profile in $${(z) NIX_PROFILES}; do
-      fpath+=($profile/share/zsh/site-functions $profile/share/zsh/$ZSH_VERSION/functions $profile/share/zsh/vendor-completions)
-    done
+
+    # for profile in $${(z) NIX_PROFILES}; do
+    #   fpath+=($profile/share/zsh/site-functions $profile/share/zsh/$ZSH_VERSION/functions $profile/share/zsh/vendor-completions)
+    # done
 
     HELPDIR="${pkgs.zsh}/share/zsh/$ZSH_VERSION/help"
 
