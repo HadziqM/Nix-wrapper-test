@@ -1,0 +1,19 @@
+# Version control directories
+.git/
+.svn/
+.hg/
+.bzr/
+
+# Build directories
+target/
+build/
+dist/
+out/
+
+# Dependencies
+node_modules/
+.pnpm-store/
+.yarn/
+vendor/
+
+.direnv/

@@ -37,6 +37,7 @@
             fd
           ];
         };
+        helix = pkgs.callPackage ./modules/tui/helix { };
         test = pkgs.callPackage ./test.nix { };
       };
     };
