@@ -66,6 +66,7 @@ let
     alias -- ls='eza -l'
     alias -- lt='eza --tree'
     alias -- tree='eza -T'
+    alias -- find=fd
 
     source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     ZSH_HIGHLIGHT_HIGHLIGHTERS+=()
@@ -76,7 +77,13 @@ in
 pkgs.symlinkJoin {
   name = "zsh";
   buildInputs = [ pkgs.makeWrapper ];
-  paths = [ pkgs.zsh ];
+  paths = with pkgs; [
+    zsh
+    bat
+    eza
+    fd
+    ripgrep
+  ];
   postBuild = ''
     mkdir -p $out/etc/zsh
     cp ${zshrc} $out/etc/zsh/.zshrc
