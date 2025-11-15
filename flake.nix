@@ -26,6 +26,7 @@
         inherit helix;
         helix-complete = pkgs.callPackage ./modules/tui/helix { };
         test = pkgs.callPackage ./test.nix { };
+        foot = pkgs.callPackage ./modules/gui/foot { };
       };
 
       devShells.${system}.default = pkgs.mkShell {
