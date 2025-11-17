@@ -1,0 +1,9 @@
+{
+  "appBadge": false,
+  "arRPC": true,
+  "customTitleBar": false,
+  "discordBranch": "stable",
+  "hardwareAcceleration": true,
+  "minimizeToTray": true,
+  "tray": true
+}

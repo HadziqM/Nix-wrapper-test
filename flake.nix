@@ -7,6 +7,7 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       ...
     }:
@@ -27,13 +28,14 @@
         helix-complete = pkgs.callPackage ./modules/tui/helix { };
         test = pkgs.callPackage ./test.nix { };
         foot = pkgs.callPackage ./modules/gui/foot { };
+        vesktop = pkgs.callPackage ./modules/gui/vesktop { };
       };
 
       devShells.${system}.default = pkgs.mkShell {
-        name = "my-dev-shell";
+        name = "wrapper";
 
         buildInputs = [
-          helix
+          self.packages.${system}.shell
         ];
       };
     };

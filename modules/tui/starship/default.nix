@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+  empty = pkgs.writeText "starship.toml" "";
+in
 pkgs.symlinkJoin {
   name = "starship";
   buildInputs = [ pkgs.makeWrapper ];

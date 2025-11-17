@@ -1,5 +1,5 @@
 add_newline = true
-format = "[░▒▓](#b3bee2)[ 󱄅 ](bg:#b3bee2 fg:#408fff)[](bg:#408fff fg:#b3bee2)$directory[](fg:#408fff bg:#394260)$git_branch$git_status[](fg:#394260 bg:#212736)$nodejs$rust$golang[](fg:#212736 bg:#1d2230)$time[ ](fg:#1d2230)\n$character"
+format = "[░▒▓](#b3bee2)[ 󱄅 ](bg:#b3bee2 fg:#408fff)[](bg:#408fff fg:#b3bee2)$directory[](fg:#408fff bg:#394260)$git_branch$git_status[](fg:#394260 bg:#212736)$nodejs$rust[](fg:#212736 bg:#1d2230)$time[ ](fg:#1d2230)$nix_shell\n$character"
 palette = "base16"
 
 [directory]
@@ -78,3 +78,14 @@ disabled = false
 format = "[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)"
 style = "bg:#1d2230"
 time_format = "%R"
+
+
+
+[shell]
+disabled = false
+
+[nix_shell]
+format = "[[ 󰁔 env [$symbol](fg:#ffffff bg:#000000) ( $name) ](fg:#408fff bg:#000000)]($style)"
+style = "bg:#000000"
+symbol = ""
+disabled = false

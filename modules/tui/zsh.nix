@@ -1,5 +1,6 @@
 { pkgs, ... }:
 let
+  starship = pkgs.callPackage ./starship { };
   zshrc = pkgs.writeText "zshrc" ''
     typeset -U path cdpath fpath manpath
 
@@ -47,7 +48,7 @@ let
       eval "$(${pkgs.atuin}/bin/atuin init zsh)"
       eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
       eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
-      eval "$(${pkgs.callPackage ./starship { }}/bin/starship init zsh)"
+      eval "$(${starship}/bin/starship init zsh)"
     fi
 
 
@@ -67,6 +68,7 @@ let
     alias -- lt='eza --tree'
     alias -- tree='eza -T'
     alias -- find=fd
+    alias -- nix-shell='nix-shell --command zsh'
 
     source ${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     ZSH_HIGHLIGHT_HIGHLIGHTERS+=()
@@ -83,6 +85,7 @@ pkgs.symlinkJoin {
     eza
     fd
     ripgrep
+    starship
   ];
   postBuild = ''
     mkdir -p $out/etc/zsh
