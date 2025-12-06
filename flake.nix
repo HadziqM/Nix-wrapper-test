@@ -1,8 +1,9 @@
 {
-  description = "A simple NixOS flake";
+  description = "simple Nix Wrapper";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
   };
 
   outputs =
@@ -29,13 +30,14 @@
         test = pkgs.callPackage ./test.nix { };
         foot = pkgs.callPackage ./modules/gui/foot { };
         vesktop = pkgs.callPackage ./modules/gui/vesktop { };
+        music = pkgs.callPackage ./modules/tui/music { };
       };
 
       devShells.${system}.default = pkgs.mkShell {
         name = "wrapper";
 
         buildInputs = [
-          self.packages.${system}.shell
+          self.packages.${system}.music
         ];
       };
     };

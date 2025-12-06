@@ -1,12 +1,19 @@
 {
   pkgs,
+  lib,
+  callPackage,
   withNixd ? true,
   ...
 }:
 let
-  hx-lsp = pkgs.callPackage ./snippets.nix { };
+  hx-lsp = callPackage ./snippets.nix { };
+  discord-rpc = callPackage ./discord-rpc.nix { };
 
-  servers = [ "statix" ] ++ pkgs.lib.optional withNixd "nixd";
+  servers = [
+    "statix"
+    "discord-rpc"
+  ]
+  ++ pkgs.lib.optional withNixd "nixd";
 
   lsp =
     if withNixd then
@@ -24,17 +31,18 @@ let
     name = "nix"
 
     [language.formatter]
-    command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt"
+    command = "${lib.getExe pkgs.nixfmt-rfc-style}"
 
 
     [[language]]
     name = "rust"
+    language-servers = ["rust-analyzer", "hx-lsp", "discord-rpc"]
 
     [language.formatter]
     command = "rustfmt"
 
     [[language]]
-    language-servers = ["dart", "hx-lsp"]
+    language-servers = ["dart", "hx-lsp", "discord-rpc"]
     name = "dart"
 
     [language-server.hx-lsp]
@@ -46,8 +54,11 @@ let
     command = "clippy"
 
     [language-server.statix]
-    command = "${pkgs.statix}/bin/statix"
+    command = "${lib.getExe pkgs.statix}"
 
+
+    [language-server.discord-rpc]
+    command = "${lib.getExe discord-rpc}"
   '';
 in
 
@@ -57,6 +68,7 @@ pkgs.symlinkJoin {
   paths = [
     pkgs.helix
     hx-lsp
+    discord-rpc
   ];
   postBuild = ''
     mkdir -p $out/config/helix/themes
