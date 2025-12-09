@@ -31,13 +31,14 @@
         foot = pkgs.callPackage ./modules/gui/foot { };
         vesktop = pkgs.callPackage ./modules/gui/vesktop { };
         music = pkgs.callPackage ./modules/tui/music { };
+        game = pkgs.callPackage ./modules/tui/game { };
       };
 
       devShells.${system}.default = pkgs.mkShell {
         name = "wrapper";
 
         buildInputs = [
-          self.packages.${system}.music
+          self.packages.${system}.game
         ];
       };
     };
