@@ -23,10 +23,9 @@ let
   mango-config = ''
     export MANGOHUD_CONFIG="font_size=12,preset=3"
   '';
-  gamescope-arg = "-w 1920 -h 1080 -f --force-grab-cursor --adaptive-sync";
+  gamescope-arg = "-w 1920 -h 1080 -f --adaptive-sync";
   gacha-run = writeScriptBin "gacha-run.sh" ''
     ${set-env}
-    ${mango-config}
     LINUX_PATH="$1"
 
     # convert relative to absolute path
@@ -37,19 +36,17 @@ let
     # wine always treat linux root folder to z: disk
     WIN_PATH="$(printf '%s' "Z:$LINUX_PATH" | sed 's|/|\\|g')"
 
-    echo "using win path $WIN_PATH"
+    printf "using win path '%s'\n" "$WIN_PATH"
 
     exec ${pkgs.gamemode}/bin/gamemoderun \
          ${pkgs.gamescope}/bin/gamescope ${gamescope-arg} -- \
          ${pkgs.umu-launcher}/bin/umu-run \
-         ${pkgs.mangohud}/bin/mangohud \
          ${jadeite}/share/jadeite/jadeite.exe "$WIN_PATH"
   '';
   game-run = writeScriptBin "game-run.sh" ''
     ${set-env}
 
     exec ${pkgs.gamemode}/bin/gamemoderun \
-         ${pkgs.gamescope}/bin/gamescope ${gamescope-arg} -- \
          ${pkgs.umu-launcher}/bin/umu-run "$@"
   '';
   game-run-mango = writeScriptBin "game-mango.sh" ''
@@ -70,6 +67,7 @@ pkgs.symlinkJoin {
     game-run
     gacha-run
     game-run-mango
+    jadeite
     umu-launcher
     wineWowPackages.stable
     protonup-rs
