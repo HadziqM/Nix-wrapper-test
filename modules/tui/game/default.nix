@@ -1,16 +1,65 @@
 { pkgs, writeScriptBin, ... }:
 let
-  vn-fix = writeScriptBin "vn-fix.sh" (builtins.readFile ./vn.sh);
   jadeite = pkgs.callPackage ./jadeite.nix { };
 
-  # from protonup-rs, proton cant be packaged because valve license policy
-  # i can make it myself if i didnt need to upload the code to github
-  proton-path = "$HOME/.steam/steam/compatibilitytools.d/GE-Proton10-26";
-  # TODO: make script to automate making prefix with available fix
+  set-proton-path = ''
+
+    # ----------------------------
+    # Proton auto-detection
+    # ----------------------------
+    if [ "$PROTONPATH" = "" ]; then
+
+      STEAM_DIR="$HOME/.steam/steam/compatibilitytools.d"
+      LUTRIS_DIR="$HOME/.local/share/lutris/runners/proton"
+
+      find_latest_proton() {
+        local candidates=""
+
+        # Steam GE-Proton
+        if [ -d "$STEAM_DIR" ]; then
+          candidates="$candidates
+          $(find "$STEAM_DIR" -maxdepth 1 -type d -name "GE-Proton*" 2>/dev/null)"
+        fi
+
+        # Lutris Proton
+        if [ -d "$LUTRIS_DIR" ]; then
+          candidates="$candidates
+          $(find "$LUTRIS_DIR" -maxdepth 1 -type d 2>/dev/null)"
+        fi
+
+        echo "$candidates" \
+          | grep -v '^$' \
+          | sort -V \
+          | tail -n 1
+      }
+
+      PROTONPATH="$(find_latest_proton)"
+
+      if [ -z "$PROTONPATH" ] || [ ! -d "$PROTONPATH" ]; then
+        echo "No Proton installation found!" >&2
+        echo "Make sure you have steam or lutris"
+        echo "Run game-init.sh to install GE proton and VNs fixes"
+        exit 1
+      fi      
+      
+    fi
+  '';
+
+  vn-fix = writeScriptBin "vn-fix.sh" (builtins.readFile ./vn.sh);
   prefix = "$HOME/temp/prefix";
-  set-env = ''
-    if [ "$PROTONPATH" = "" ]; then PROTONPATH=${proton-path}; fi        
+  game-init = writeScriptBin "game-init.sh" ''
     if [ "$WINEPREFIX" = "" ]; then WINEPREFIX=${prefix}; fi
+    export WINEPREFIX
+    echo "$WINEPREFIX"
+    ${pkgs.protonup-rs}/bin/protonup-rs -q
+    # ${vn-fix}/bin/vn-fix.sh
+    vn-fix.sh lavfilters mciqtz32 mf quartz2 quartz_dx wmp11 xaudio29
+  '';
+
+  # TODO: make script to automate making prefix with available fix
+  set-env = ''
+    if [ "$WINEPREFIX" = "" ]; then WINEPREFIX=${prefix}; fi
+    ${set-proton-path}
 
     export WINEDEBUG="-all"
     export WINEDLLOVERRIDES="d3d11=n;d3d12=n;dxgi=n"
@@ -65,6 +114,7 @@ pkgs.symlinkJoin {
   paths = with pkgs; [
     vn-fix
     game-run
+    game-init
     gacha-run
     game-run-mango
     jadeite

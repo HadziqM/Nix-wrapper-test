@@ -1,10 +1,12 @@
-#!usr/bin/env bash
+#!/usr/bin/env bash
 
 echo
 echo "Helper script to install codecs for VNs on wine (v2025-11-08)"
 echo
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+# SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+# change directory to temp folder, bash source path are immutable in nix
+SCRIPT_DIR="${TMPDIR:-/tmp}/vn-downloads"
 
 Quit() { echo; exit; }
 Heading() { echo; echo "[INSTALL] $@"; }
