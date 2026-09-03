@@ -46,7 +46,7 @@ let
 
     if [[ $TERM != "dumb" ]]; then
       eval "$(${pkgs.atuin}/bin/atuin init zsh)"
-      eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
+      # eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
       eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
       eval "$(${starship}/bin/starship init zsh)"
     fi
@@ -58,7 +58,7 @@ let
     alias -- ....='cd ../../..'
     alias -- c=clear
     alias -- cat='bat --style=auto'
-    alias -- cd=z
+    # alias -- cd=z
     alias -- e=exit
     alias -- grep=rg
     alias -- h=history
@@ -86,6 +86,7 @@ pkgs.symlinkJoin {
     fd
     ripgrep
     starship
+    atuin
   ];
   postBuild = ''
     mkdir -p $out/etc/zsh
