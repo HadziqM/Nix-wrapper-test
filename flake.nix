@@ -32,6 +32,8 @@
         vesktop = pkgs.callPackage ./modules/gui/vesktop { };
         music = pkgs.callPackage ./modules/tui/music { };
         game = pkgs.callPackage ./modules/tui/game { };
+        cheat-engine = pkgs.callPackage ./modules/tui/game/cheat-engine.nix { };
+        ocr = pkgs.callPackage ./modules/scripts/ocr { };
       };
 
       devShells.${system}.default = pkgs.mkShell {

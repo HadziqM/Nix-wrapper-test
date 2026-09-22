@@ -2,7 +2,7 @@
   lib,
   buildGoModule,
   fetchFromGitHub,
-# versionCheckHook,
+  # versionCheckHook,
 }:
 
 buildGoModule (finalAttrs: {
